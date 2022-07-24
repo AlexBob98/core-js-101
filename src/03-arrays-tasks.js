@@ -233,8 +233,9 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  // eslint-disable-next-line no-return-assign, no-undef
+  return arr.map((i) => x += i, x = 0);
 }
 
 /**
@@ -370,8 +371,13 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  let count = 0;
+  // eslint-disable-next-line array-callback-return
+  arr.filter((n) => {
+    if (n === item) { count += 1; }
+  });
+  return count;
 }
 
 /**
