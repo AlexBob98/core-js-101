@@ -53,8 +53,9 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  return ((date.getFullYear() % 4 === 0) && (
+    date.getFullYear() % 100 !== 0)) || (date.getFullYear() % 400 === 0);
 }
 
 
@@ -73,8 +74,13 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const res = endDate - startDate;
+  const H = Math.floor((res / 3600000) % 100).toString().padStart(2, '0');
+  const M = Math.floor((res / 60000) % 60).toString().padStart(2, '0');
+  const S = Math.floor((res / 1000) % 60).toString().padStart(2, '0');
+  const MS = Math.floor(res % 1000).toString().padStart(3, '0');
+  return (`${H}:${M}:${S}.${MS}`);
 }
 
 
@@ -94,8 +100,20 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  function angleTime() {
+    // eslint-disable-next-line no-use-before-define
+    return Math.abs(0.5 * ((60 * h) - (11 * m)));
+  }
+  function convert(angle) {
+    if (angle > 180) {
+      return ((360 - angle) * Math.PI) / 180;
+    }
+    return (angle * Math.PI) / 180;
+  }
+  const h = date.getUTCHours() > 12 ? date.getUTCHours() - 12 : date.getUTCHours();
+  const m = date.getUTCMinutes();
+  return convert(angleTime(h, m));
 }
 
 
